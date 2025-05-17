@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgets - Source Expence</title>
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Page Specific Styles -->
+    <link rel="stylesheet" href="budgets.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <img src="images/wallet-logo.svg" alt="Source Expence Logo" class="logo-img">
+                <h2>Source Expence</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="transactions.html"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+                <li class="active"><a href="budgets.html"><i class="fas fa-wallet"></i> Budgets</a></li>
+                <li><a href="#"><i class="fas fa-bullseye"></i> Goals</a></li>
+                <li><a href="#"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="user-profile">
+                <img src="images/default-avatar.png" alt="User Avatar">
+                <div class="user-info">
+                    <h3>Welcome back!</h3>
+                    <p>John Doe</p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <div class="header-left">
+                    <h1>Budgets</h1>
+                    <p class="date">As of <span id="currentDate">April 15, 2024</span></p>
+                </div>
+                <div class="header-right">
+                    <button class="btn secondary" id="exportBtn">
+                        <i class="fas fa-download"></i> Export Budgets
+                    </button>
+                    <button class="btn primary" id="createBudgetBtn">
+                        <i class="fas fa-plus"></i> Create Budget
+                    </button>
+                </div>
+            </header>
+
+            <!-- Summary Stats -->
+            <section class="summary-stats">
+                <div class="stat">
+                    <span>Total Allocated</span>
+                    <span class="amount" id="totalAllocated">$0.00</span>
+                </div>
+                <div class="stat">
+                    <span>Total Spent</span>
+                    <span class="amount" id="totalSpent">$0.00</span>
+                </div>
+                <div class="stat">
+                    <span>Total Remaining</span>
+                    <span class="amount positive" id="totalRemaining">$0.00</span>
+                </div>
+            </section>
+
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search budgets...">
+                </div>
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="periodFilter">Period</label>
+                        <select id="periodFilter">
+                            <option value="all">All Periods</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="statusFilter">Status</label>
+                        <select id="statusFilter">
+                            <option value="all">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                            <option value="expired">Expired</option>
+                        </select>
+                    </div>
+                    <button class="btn text" id="clearFiltersBtn">Clear Filters</button>
+                </div>
+            </section>
+
+            <!-- Budgets Grid -->
+            <section class="budgets-grid" id="budgetsGrid">
+                <!-- Budgets will be dynamically inserted here -->
+            </section>
+        </main>
+    </div>
+
+    <!-- Budget Modal -->
+    <div class="modal" id="budgetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Budget</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="budgetForm">
+                <div class="form-group">
+                    <label for="budgetName">Budget Name</label>
+                    <input type="text" id="budgetName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="budgetPeriod">Period</label>
+                    <select id="budgetPeriod" name="period" required>
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="yearly">Yearly</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <div class="form-group date-range hidden">
+                    <div class="date-inputs">
+                        <div>
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" name="startDate">
+                        </div>
+                        <div>
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate" name="endDate">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="totalAmount">Total Amount</label>
+                    <input type="number" id="totalAmount" name="amount" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Categories</label>
+                    <div id="categoriesList">
+                        <div class="category-item">
+                            <select class="category-select">
+                                <option value="groceries">Groceries</option>
+                                <option value="rent">Rent</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="savings">Savings</option>
+                            </select>
+                            <input type="number" class="category-amount" step="0.01" min="0" placeholder="0.00">
+                            <button type="button" class="btn text remove-category"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn text" id="addCategoryBtn">
+                        <i class="fas fa-plus"></i> Add Category
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rolloverEnabled" name="rollover">
+                        Enable Rollover
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn primary">Create Budget</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Global Scripts -->
+    <script src="script.js"></script>
+    <!-- Page Specific Scripts -->
+    <script src="budgets.js"></script>
+</body>
+</html> 

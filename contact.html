@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Source Expence</title>
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Page Specific Styles -->
+    <link rel="stylesheet" href="contact.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="sticky-header">
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="images/wallet-logo.svg" alt="Source Expence Logo"><span>Source Expence</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="about.html">About</a>
+                <a href="budgets.html">Budgets</a>
+                <a href="transactions.html">Transactions</a>
+                <a href="contact.html" class="active">Contact</a>
+                <a href="login.html" class="login-btn">Login</a>
+            </div>
+            <button class="mobile-menu-button" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>We're Here to Help!</h1>
+        <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="contact-container">
+        <!-- Contact Form Section -->
+        <section class="contact-form-section">
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name (Optional)</label>
+                    <input type="text" id="name" name="name" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject <span class="required">*</span></label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a subject</option>
+                        <option value="account">Account Issue</option>
+                        <option value="feature">Feature Request</option>
+                        <option value="billing">Billing Question</option>
+                        <option value="bug">Report a Bug</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message <span class="required">*</span></label>
+                    <textarea id="message" name="message" required maxlength="1000" placeholder="How can we help you?"></textarea>
+                    <div class="character-counter"><span id="charCount">0</span>/1000</div>
+                </div>
+                <div class="form-group">
+                    <label for="file">Attachment (Optional, max 5MB)</label>
+                    <input type="file" id="file" name="file" accept=".jpg,.jpeg,.png,.pdf" max-size="5242880">
+                    <small>Supported formats: JPG, PNG, PDF</small>
+                </div>
+                <div class="g-recaptcha" data-sitekey="your-recaptcha-site-key"></div>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </section>
+
+        <!-- Alternative Contact Options -->
+        <section class="alternative-contact">
+            <div class="contact-info">
+                <h2>Other Ways to Reach Us</h2>
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email Us</h3>
+                        <p>Support: <a href="mailto:support@sourceexpence.com">support@sourceexpence.com</a></p>
+                        <p>Press: <a href="mailto:press@sourceexpence.com">press@sourceexpence.com</a></p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <i class="far fa-clock"></i>
+                    <div>
+                        <h3>Support Hours</h3>
+                        <p>Monday - Friday</p>
+                        <p>9:00 AM - 5:00 PM EST</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <i class="fas fa-question-circle"></i>
+                    <div>
+                        <h3>Help Center</h3>
+                        <p><a href="#" class="help-center-link">Find answers to common questions</a></p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Connect with us on LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Trust Signals -->
+    <section class="trust-signals">
+        <div class="security-badges">
+            <img src="images/ssl-badge.png" alt="SSL Secure" class="security-badge">
+            <img src="images/gdpr-badge.png" alt="GDPR Compliant" class="security-badge">
+        </div>
+        <p class="privacy-notice">Your information is secure and will only be used to respond to your inquiry.</p>
+        <a href="#" class="privacy-link">View our Privacy Policy</a>
+    </section>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner hidden">
+        <div class="spinner"></div>
+        <p>Sending your message...</p>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Global Scripts -->
+    <script src="script.js"></script>
+    <!-- Page Specific Scripts -->
+    <script src="contact.js"></script>
+</body>
+</html> 

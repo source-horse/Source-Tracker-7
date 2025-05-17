@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Source Expence</title>
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Page Specific Styles -->
+    <link rel="stylesheet" href="login.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add CSP headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com https://connect.facebook.net; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.budgettracker.com;">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="logo">
+                <img src="images/wallet-logo.svg" alt="Source Expence Logo" class="logo-img"><h1>Source Expence</h1>
+                <p>Track Your Finances with Ease</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="login">Login</button>
+                <button class="tab-btn" data-tab="signup">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" required aria-label="Email input">
+                    <span class="error-message" id="loginEmailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="password-input">
+                        <input type="password" id="loginPassword" name="password" required aria-label="Password input">
+                        <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="error-message" id="loginPasswordError"></span>
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe">Remember me for 30 days</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Log In</button>
+
+                <div class="forgot-password">
+                    <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                </div>
+
+                <div class="social-login">
+                    <p>Or continue with</p>
+                    <div class="social-buttons">
+                        <button type="button" class="btn btn-social google" aria-label="Sign in with Google">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button type="button" class="btn btn-social apple" aria-label="Sign in with Apple">
+                            <i class="fab fa-apple"></i>
+                        </button>
+                        <button type="button" class="btn btn-social facebook" aria-label="Sign in with Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" required aria-label="Email input">
+                    <span class="error-message" id="signupEmailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <div class="password-input">
+                        <input type="password" id="signupPassword" name="password" required 
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                               aria-label="Password input">
+                        <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-requirements">
+                        <p>Password must contain:</p>
+                        <ul>
+                            <li id="length">At least 8 characters</li>
+                            <li id="uppercase">One uppercase letter</li>
+                            <li id="lowercase">One lowercase letter</li>
+                            <li id="number">One number</li>
+                            <li id="special">One special character</li>
+                        </ul>
+                    </div>
+                    <span class="error-message" id="signupPasswordError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="password-input">
+                        <input type="password" id="confirmPassword" name="confirmPassword" required aria-label="Confirm password input">
+                        <button type="button" class="toggle-password" aria-label="Toggle confirm password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="error-message" id="confirmPasswordError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name (Optional)</label>
+                    <input type="text" id="fullName" name="fullName" aria-label="Full name input">
+                </div>
+
+                <div class="form-group">
+                    <label for="currency">Preferred Currency</label>
+                    <select id="currency" name="currency" required aria-label="Currency selection">
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="termsAgree" name="termsAgree" required>
+                    <label for="termsAgree">I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a></label>
+                    <span class="error-message" id="termsError"></span>
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="marketingConsent" name="marketingConsent">
+                    <label for="marketingConsent">I want to receive updates and marketing emails</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Account</button>
+
+                <div class="social-login">
+                    <p>Or sign up with</p>
+                    <div class="social-buttons">
+                        <button type="button" class="btn btn-social google" aria-label="Sign up with Google">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button type="button" class="btn btn-social apple" aria-label="Sign up with Apple">
+                            <i class="fab fa-apple"></i>
+                        </button>
+                        <button type="button" class="btn btn-social facebook" aria-label="Sign up with Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Guest Access -->
+        <div class="guest-access">
+            <p>Want to try before signing up?</p>
+            <button id="demoButton" class="btn btn-secondary">Explore Demo</button>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner hidden">
+        <div class="spinner"></div>
+        <p>Please wait...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <footer>
+        <nav>
+            <a href="/terms">Terms of Service</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/support">Support</a>
+            <a href="/faq">FAQ</a>
+        </nav>
+    </footer>
+
+    <!-- Global Scripts -->
+    <script src="script.js"></script>
+    <!-- Page Specific Scripts -->
+    <script src="login.js"></script>
+</body>
+</html> 

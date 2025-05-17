@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions - Source Expence</title>
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Page Specific Styles -->
+    <link rel="stylesheet" href="transactions.css">
+    <link rel="stylesheet" href="budgets.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <img src="images/wallet-logo.svg" alt="Source Expence Logo" class="logo-img">
+                <h2>Source Expence</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li class="active"><a href="transactions.html"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+                <li><a href="budgets.html"><i class="fas fa-wallet"></i> Budgets</a></li>
+                <li><a href="#"><i class="fas fa-bullseye"></i> Goals</a></li>
+                <li><a href="#"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header with Summary -->
+            <header class="transactions-header">
+                <div class="header-left">
+                    <h1>Transactions</h1>
+                    <div class="summary-stats">
+                        <div class="stat">
+                            <span>Income</span>
+                            <span class="amount positive">+$6,200.00</span>
+                        </div>
+                        <div class="stat">
+                            <span>Expenses</span>
+                            <span class="amount negative">-$3,850.00</span>
+                        </div>
+                        <div class="stat">
+                            <span>Net</span>
+                            <span class="amount">$2,350.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="btn secondary" id="exportBtn">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                    <button class="btn primary" id="addTransactionBtn">
+                        <i class="fas fa-plus"></i> Add Transaction
+                    </button>
+                </div>
+            </header>
+
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search transactions..." id="searchInput">
+                </div>
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Date Range</label>
+                        <select id="dateFilter">
+                            <option value="7">Last 7 days</option>
+                            <option value="30" selected>Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Category</label>
+                        <select id="categoryFilter" multiple>
+                            <option value="all" selected>All Categories</option>
+                            <option value="housing">Housing</option>
+                            <option value="food">Food</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Type</label>
+                        <select id="typeFilter">
+                            <option value="all" selected>All Types</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <button class="btn text" id="clearFilters">Clear Filters</button>
+                </div>
+            </section>
+
+            <!-- Transactions Table -->
+            <section class="transactions-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAll"></th>
+                            <th>Date <i class="fas fa-sort"></i></th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Amount <i class="fas fa-sort"></i></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsBody">
+                        <!-- Transactions will be populated by JavaScript -->
+                    </tbody>
+                </table>
+                <div class="table-footer">
+                    <div class="showing-entries">Showing 1-50 of 156 entries</div>
+                    <button class="btn secondary" id="loadMore">Load More</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add/Edit Transaction Modal -->
+    <div class="modal" id="transactionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Transaction</h3>
+                <button class="close-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label>Type</label>
+                    <div class="toggle-group">
+                        <input type="radio" name="type" id="income" value="income">
+                        <label for="income">Income</label>
+                        <input type="radio" name="type" id="expense" value="expense" checked>
+                        <label for="expense">Expense</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" name="date" id="transactionDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" name="amount" id="transactionAmount" step="0.01" required placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" id="transactionCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="housing">Housing</option>
+                        <option value="food">Food</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="entertainment">Entertainment</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" name="description" id="transactionDescription" required placeholder="Enter description">
+                </div>
+                <div class="form-group">
+                    <label>Notes (Optional)</label>
+                    <textarea name="notes" id="transactionNotes" placeholder="Add any additional notes"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="recurring" id="recurringTransaction">
+                        Make this a recurring transaction
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn primary">Save Transaction</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Global Scripts -->
+    <script src="script.js"></script>
+    <!-- Page Specific Scripts -->
+    <script src="transactions.js"></script>
+    <script src="budgets.js"></script>
+</body>
+</html> 

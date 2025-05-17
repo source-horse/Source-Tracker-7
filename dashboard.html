@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Source Expence</title>
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Page Specific Styles -->
+    <link rel="stylesheet" href="dashboard.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <img src="images/wallet-logo.svg" alt="Source Expence Logo" class="logo-img">
+                <h2>Source Expence</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="transactions.html"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+                <li><a href="budgets.html"><i class="fas fa-wallet"></i> Budgets</a></li>
+                <li><a href="#"><i class="fas fa-bullseye"></i> Goals</a></li>
+                <li><a href="#"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="user-profile">
+                <img src="images/default-avatar.png" alt="User Avatar">
+                <div class="user-info">
+                    <h3>Welcome back!</h3>
+                    <p>John Doe</p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header with Date -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Dashboard Overview</h1>
+                    <p class="date">As of <span id="currentDate">April 15, 2024</span></p>
+                </div>
+                <div class="header-right">
+                    <button class="btn secondary" id="exportBtn">
+                        <i class="fas fa-download"></i> Export Report
+                    </button>
+                    <button class="btn primary" id="addTransactionBtn">
+                        <i class="fas fa-plus"></i> Quick Add
+                    </button>
+                </div>
+            </header>
+
+            <!-- Summary Widgets -->
+            <section class="summary-widgets">
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-wallet"></i>
+                        <span>Total Balance</span>
+                    </div>
+                    <div class="widget-content">
+                        <h2>$12,450.00</h2>
+                        <p class="trend positive">+5.2% <span>vs last month</span></p>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>Income</span>
+                    </div>
+                    <div class="widget-content">
+                        <h2>$6,200.00</h2>
+                        <p class="trend positive">+2.3% <span>vs last month</span></p>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>Expenses</span>
+                    </div>
+                    <div class="widget-content">
+                        <h2>$3,850.00</h2>
+                        <p class="trend negative">+8.1% <span>vs last month</span></p>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-piggy-bank"></i>
+                        <span>Savings</span>
+                    </div>
+                    <div class="widget-content">
+                        <h2>$2,350.00</h2>
+                        <p class="trend positive">+12.5% <span>vs last month</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Income vs Expenses</h3>
+                        <select id="chartPeriod">
+                            <option value="week">This Week</option>
+                            <option value="month" selected>This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                    <canvas id="incomeExpenseChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Spending by Category</h3>
+                        <select id="categoryPeriod">
+                            <option value="week">This Week</option>
+                            <option value="month" selected>This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="recent-activity">
+                <div class="section-header">
+                    <h3>Recent Activity</h3>
+                    <a href="transactions.html" class="btn text">View All</a>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon expense">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Grocery Shopping</h4>
+                            <p>Whole Foods Market</p>
+                        </div>
+                        <div class="activity-amount expense">
+                            -$156.35
+                        </div>
+                        <div class="activity-date">
+                            Today
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon income">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Salary Deposit</h4>
+                            <p>Employer Co.</p>
+                        </div>
+                        <div class="activity-amount income">
+                            +$3,250.00
+                        </div>
+                        <div class="activity-date">
+                            Yesterday
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon expense">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Rent Payment</h4>
+                            <p>Monthly Rent</p>
+                        </div>
+                        <div class="activity-amount expense">
+                            -$1,800.00
+                        </div>
+                        <div class="activity-date">
+                            Apr 12
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Budget Progress -->
+            <section class="budget-progress">
+                <div class="section-header">
+                    <h3>Budget Progress</h3>
+                    <a href="budgets.html" class="btn text">View All</a>
+                </div>
+                <div class="progress-grid">
+                    <!-- Budget items will be dynamically inserted here by JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Global Scripts -->
+    <script src="script.js"></script>
+    <!-- Page Specific Scripts -->
+    <script src="dashboard.js"></script>
+</body>
+</html> 
